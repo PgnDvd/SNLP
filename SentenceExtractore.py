@@ -6,8 +6,12 @@ from HTMLParser import HTMLParser
 
 
 def sentence_tag(str):
-    tokens = ntlk.word_tokenize(str);
-    return
+    print(str)
+    import nltk
+    text = nltk.word_tokenize(str)
+    tagged = nltk.pos_tag(text)
+    print(tagged)
+
 
 
 class MyHTMLParser(HTMLParser):
@@ -28,6 +32,7 @@ class MyHTMLParser(HTMLParser):
                     self.countLanguages += 1
                     self.inLink = True
                     self.lasttag = tag
+                    print("miao")
 
     def handle_endtag(self, tag):
         if tag == "div":
@@ -35,14 +40,18 @@ class MyHTMLParser(HTMLParser):
 
     def handle_data(self, data):
         if self.lasttag == 'div' and self.inLink and data.strip():
-            sentence_tag(data)
+            text = html_decoded_string = parser.unescape(data)
+            content = text.decode('utf-8')
+            print(content.rstrip())
+            print("end")
+            sentence_tag(content.rstrip())
 
 
-print(
-    "19 of the UDHR.<br/><br/>This is used when someone claims your opinion is wrong or incorrect. If someone has this brought up, they have been Aarowned.</div>")
+
 with open("words.txt") as f:
     for line in f:
         url = "http://www.urbandictionary.com/define.php?term=" + line
+        print(url)
         req = urllib.urlopen(url)
         html = str(req.read())  # make it a str object
         print("aaaaaa")
@@ -52,8 +61,13 @@ with open("words.txt") as f:
         print("bbbb")
         #print (html)
         parser = MyHTMLParser()
-
         # parser.feed(html)
+        print("ciao")
         parser.feed(html)
 
 
+
+
+sentenceArray = "hello i'm beautfil", "asd ", "asd"
+word_polarize(sentenceArray)
+sentence_polarize(sentenceArray)
