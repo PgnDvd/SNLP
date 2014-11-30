@@ -1,8 +1,16 @@
+import os
+
 from TwitterSearch import *
 
+MAXCOUNT = 10
 try:
+
+    # Open file word.txt
+    # for line in file
+    #word = line
+    wordgot = 0
     tso = TwitterSearchOrder()  # create a TwitterSearchOrder object
-    tso.set_keywords(['asd'])  # let's define all words we would like to have a look for
+    tso.set_keywords([word])  # let's define all words we would like to have a look for
     tso.set_include_entities(False)  # and don't give us all those entity information
 
     # it's about time to create a TwitterSearch object with our secret tokens
@@ -14,8 +22,14 @@ try:
     )
 
     # this is where the fun actually starts :)
+    prova = "ciao"
     for tweet in ts.search_tweets_iterable(tso):
-        print('@%s tweeted: %s' % ( tweet['user']['screen_name'], tweet['text'] ))
+        if (wordgot <= MAXCOUNT)
+            if (word in tweet['text'])
+                os.system("printf \"" + tweet['text'] + "\n\" >> words/" + word + ".txt")
+
+                print('@%s tweeted: %s' % ( tweet['user']['screen_name'], tweet['text'] ))
+                wordgot = wordgot +1
 
 except TwitterSearchException as e:  # take care of all those ugly errors if there are some
     print(e)
