@@ -49,12 +49,20 @@ def Granularity(sentenceArray):
     good
     print
     bad
-    if good >= bad:
+    shifted = 0
+    if 'not' in sentence shifted = 1
+    if good >= bad & shifted = 0:
         print
         "good word"
-    else:
+    if good >= bad & shifted = 1:
         print
         "bad word"
+    if good <= bad & shifted = 0:
+        print
+        "bad word"
+    else:
+        print
+        "good word"
 
 
 list = []
