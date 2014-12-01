@@ -28,8 +28,18 @@ try:
             from StringIO import StringIO
             import os
 
+
+            # -------------------------------------------------------------------
+            #-------------------------------------------------------------------
+            #-------------------------------------------------------------------
+
+            #-------------------------------------------------------------------
+            #MODIFY THIS
             command = "curl --get 'https://api.twitter.com/1.1/application/rate_limit_status.json' --data 'resources=search' --header 'Authorization: OAuth oauth_consumer_key=\"2sCZOdiLP09Bb1wGnKoiB0jtv\", oauth_nonce=\"6ac6c4bddc0cf624d9285d0dab13d61d\", oauth_signature=\"63svXKmvlc%2BqlK5WxB8dBuTbn3Y%3D\", oauth_signature_method=\"HMAC-SHA1\", oauth_timestamp=\"1417461273\", oauth_token=\"244016297-sZcpSDkuk6V9KTy5BGGy5aiOto1J1ekk9aSrcM9R\", oauth_version=\"1.0\"' --verbose"
-            # os.system()
+            # -------------------------------------------------------------------
+            #-------------------------------------------------------------------
+            #-------------------------------------------------------------------
+            #-------------------------------------------------------------------
 
             r = os.popen(command).read()
             import json
@@ -69,6 +79,15 @@ try:
             tso = TwitterSearchOrder()  # create a TwitterSearchOrder object
             tso.set_keywords([word])  # let's define all words we would like to have a look for
             tso.set_include_entities(False)  # and don't give us all those entity information
+            # -------------------------------------------------------------------
+            #-------------------------------------------------------------------
+            #-------------------------------------------------------------------
+            #-------------------------------------------------------------------
+            #-------------------------------------------------------------------
+            #-------------------------------------------------------------------
+            #-------------------------------------------------------------------
+            #-------------------------------------------------------------------
+            #MODIFY THIS
 
             # it's about time to create a TwitterSearch object with our secret tokens
             ts = TwitterSearch(
