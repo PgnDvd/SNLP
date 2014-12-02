@@ -1,8 +1,8 @@
 from TwitterSearch import *
 
 MAXCOUNT = 10
-try:
 
+try:
     # Open file word.txt
     # for line in file
     #word = line
@@ -41,6 +41,8 @@ try:
             #-------------------------------------------------------------------
             #-------------------------------------------------------------------
 
+
+            '''
             r = os.popen(command).read()
             import json
             from pprint import pprint
@@ -53,6 +55,9 @@ try:
             print(data['resources']['search']['/search/tweets']['reset'])
             if (data['resources']['search']['/search/tweets']['remaining'] < 10):
                 time.sleep(data['resources']['search']['/search/tweets']['reset'])
+
+
+            '''
             #
             # buf = StringIO()
             # c = pycurl.Curl()
@@ -103,9 +108,11 @@ try:
 
 
             # this is where the fun actually starts :)
-            for tweet in ts.search_tweets_iterable(tso):
+            for tweet in ts.search_tweets(tso):
+                print(tweet)
                 if (wordgot <= MAXCOUNT):
-                    if (" " + word + " " in tweet['text']):
+                    wordstring = " " + word + " "
+                    if (wordstring in tweet['text']):
                         print('@%s tweeted: %s' % ( tweet['user']['screen_name'], tweet['text'] ))
 
                         #os.system("printf \"" + tweet['text'] + "\n\" >> words/" + word + ".txt")
@@ -114,24 +121,26 @@ try:
 
 except TwitterSearchException as e:  # take care of all those ugly errors if there are some
     print(e)
-    import json
-    import pycurl
 
-    from StringIO import StringIO
-
-    buf = StringIO()
-    c = pycurl.Curl()
-    c.setopt(c.URL, 'https://api.twitter.com/1.1/application/rate_limit_status.json')
-    c.setopt(c.WRITEFUNCTION, buf.write)
-    c.setopt(c.HTTPHEADER, ['Accept-Charset: UTF-8'])
-    c.setopt(c.POSTFIELDS,
-             "--data \'resources=search\' --header \'Authorization: OAuth oauth_consumer_key=\"2sCZOdiLP09Bb1wGnKoiB0jtv\", oauth_nonce=\"6ac6c4bddc0cf624d9285d0dab13d61d\", oauth_signature=\"63svXKmvlc%2BqlK5WxB8dBuTbn3Y%3D\", oauth_signature_method=\"HMAC-SHA1\", oauth_timestamp=\"1417461273\", oauth_token=\"244016297-sZcpSDkuk6V9KTy5BGGy5aiOto1J1ekk9aSrcM9R\", oauth_version=\"1.0\"\' --verbose")
-    c.perform()
-    c.close()
-    data = buf.getvalue()
-    info = json.dumps(data)
-    json_object = json.loads(json.loads(info))
-
+    # print(e)
+    # import json
+    # import pycurl
+    #
+    # from StringIO import StringIO
+    #
+    # buf = StringIO()
+    # c = pycurl.Curl()
+    # c.setopt(c.URL, 'https://api.twitter.com/1.1/application/rate_limit_status.json')
+    # c.setopt(c.WRITEFUNCTION, buf.write)
+    # c.setopt(c.HTTPHEADER, ['Accept-Charset: UTF-8'])
+    # c.setopt(c.POSTFIELDS,
+    # "--data \'resources=search\' --header \'Authorization: OAuth oauth_consumer_key=\"2sCZOdiLP09Bb1wGnKoiB0jtv\", oauth_nonce=\"6ac6c4bddc0cf624d9285d0dab13d61d\", oauth_signature=\"63svXKmvlc%2BqlK5WxB8dBuTbn3Y%3D\", oauth_signature_method=\"HMAC-SHA1\", oauth_timestamp=\"1417461273\", oauth_token=\"244016297-sZcpSDkuk6V9KTy5BGGy5aiOto1J1ekk9aSrcM9R\", oauth_version=\"1.0\"\' --verbose")
+    # c.perform()
+    # c.close()
+    # data = buf.getvalue()
+    # info = json.dumps(data)
+    # json_object = json.loads(json.loads(info))
+    #
 
     # import subprocess
     #
