@@ -1,0 +1,20 @@
+[pcre-ocaml] … Markus Mottl - Fixed spelling
+I guess I'll pick a different implementation language for the project I have in mind. Wasted enough hours on OCaml installation.
+OK, so OCaml refuses to install properly... or rather, all the OPAM packages that are necessary for Real World OCaml. #ragequit
+… Makefile for AT Summary: So external folks can build it :) Requires pfff installed via opam, and ocaml 4. Reviewe...
+Need to give ocaml-vnet (…) a try later today - bringing Mirage joy a little easier to MacOS X.
+Real World OCaml seems to assume that installing OCaml + tools is trivial. Except it's not: … :(
+Paging can you write a clean ocaml pgp implementation next, please? …
+Inventor ocaml statement on waste your nurture operating costs: IAjaLMi 
+Forget #BlackFriday lets shout about Functional Programming Friday RT and support the use of #fsharp #scala #clojure #haskell #erlang #ocaml
+a 2048 clone running in browser, written entirely in OCaml  …
+A very quick sketch of OCaml-tan because ##javascript made me do it pic.twitter.com/44ZmK9E6tf
+OCaml Weekly News, 25 Nov 2014: Cmdliner 0.9.6 Go Oracle like facility for Ocaml? Call for Presentation...  #ocaml
+'OCaml-TLS' is a from-scratch implementation of TLS' #osio
+Starting to wonder if unikernels running on top of an OCaml runtime are the container future we're after #osio
+I've updated my OCaml ppx blog post with latest info & added a section on ppx_tools & better OASIS instructions: …
+Sad because so many things in OCaml depend on sexplib, and therefore on camlp4. This should be purified by fire...
+OCaml Briefly …
+Awesome, on the front-page of HN with my OCaml Briefly post … pic.twitter.com/N6GeA0PHHy
+“i attempted to write my soon-to-be amazing service in a haskell-ocaml hybrid but then i got drunk and used php and went to the beach” - *
+ocaml vs haskell - GO!
