@@ -21,13 +21,15 @@ import re
 from StringIO import StringIO
 
 
-sentenceArray = ["hello i'm asd beautfil", "asd no ", "asd hey"]
+sentenceArray = ["hello i'm good beautfil", "reddit sucks ", "i'm wonderfully hungry"]
+print(sentenceArray)
 
 
 def Granularity(sentenceArray):
     bad = 0
     good = 0
     for sentence in sentenceArray:
+        # print(sentence)
         buf = StringIO()
         c = pycurl.Curl()
         c.setopt(c.URL, 'http://text-processing.com/api/sentiment/')
@@ -39,33 +41,29 @@ def Granularity(sentenceArray):
         data = buf.getvalue()
         info = json.dumps(data)
         json_object = json.loads(json.loads(info))
-        print
-        json_object['label']
+        #print(json_object)
+        #print(json_object['label'])
         if str(json_object['label']) == "neg":
+            #print("neg")
             bad = bad + 1
         if str(json_object['label']) == "pos":
+            #print("pos")
             good = good + 1
-    print
-    good
-    print
-    bad
+    # print (good)
+    #print (bad)
     shifted = 0
-    if 'not' in sentence shifted = 1
-    if good >= bad & shifted = 0:
-        print
-        "good word"
-    if good >= bad & shifted = 1:
-        print
-        "bad word"
-    if good <= bad & shifted = 0:
-        print
-        "bad word"
+    #if 'not' in sentence:
+    #    shifted == 1
+    if ((good > bad) & (shifted == 0)):
+        print("a good word")
+    elif ((good > bad) & (shifted == 1)):
+        print("bad word")
+    elif ((good < bad) & (shifted == 0)):
+        print("a bad word")
+    elif ((good < bad) & (shifted == 1)):
+        print("good word")
     else:
-        print
-        "good word"
-
-
-list = []
+        print("neutral word")
 
 
 def getWords(sentence):
@@ -74,11 +72,11 @@ def getWords(sentence):
 
 def wordGran(sentenceArray):
     list = []
-    good = 0
-    bad = 0
     for sentence in sentenceArray:
         list = list + getWords(sentence)
+        # print(list)
     Granularity(list)
 
 
 wordGran(sentenceArray)
+Granularity(sentenceArray)
