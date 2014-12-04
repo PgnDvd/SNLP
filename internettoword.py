@@ -1,5 +1,4 @@
 __author__ = 'davide'
-import os
 
 with open("internetnewline.txt") as f:
     content = f.readlines()
@@ -13,5 +12,5 @@ with open("internetnewline.txt") as f:
             print(j)
             parola = word[i + 9:j - 3]
             print(parola)
-            os.system("printf \"" + parola + "\n\" >> intwords.txt")
+            # os.system("printf \"" + parola + "\n\" >> intwords.txt")
 

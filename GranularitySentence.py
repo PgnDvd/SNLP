@@ -21,6 +21,11 @@ import os
 from StringIO import StringIO
 
 
+def osprint(param):
+    os.system('printf "' + word + ' : ' + str(param) + "\n\">> gransent.txt")
+
+
+
 def Granularity(sentenceArray):
     bad = 0
     good = 0
@@ -33,12 +38,27 @@ def Granularity(sentenceArray):
             c.setopt(c.WRITEFUNCTION, buf.write)
             c.setopt(c.HTTPHEADER, ['Accept-Charset: UTF-8'])
             c.setopt(c.POSTFIELDS, "text=" + sentence)
+            c.setopt(pycurl.PROXY, '127.0.0.1:9050')
+            c.setopt(pycurl.PROXYTYPE, pycurl.PROXYTYPE_SOCKS5)
             c.perform()
             c.close()
             data = buf.getvalue()
+            os.system("printf \"" + word + " , " + sentence + data + "\n\">> gransentdebug.txt")
             print(word, sentence, data)
             if ("Throttled" in data):
                 print("Throttled")
+                from TorCtl import TorCtl
+
+                conn = TorCtl.connect(controlAddr="127.0.0.1", controlPort=9151, passphrase="zazaking")
+                print(conn.is_live())
+                conn.send_signal("NEWNYM")
+                # conn.sendAndRecv('signal newnymrn')
+                conn.close()
+                import time
+
+                time.sleep(5)
+                print
+                "renewed"
             info = json.dumps(data)
             json_object = json.loads(json.loads(info))
             #print(json_object)
@@ -50,8 +70,8 @@ def Granularity(sentenceArray):
                 #print("pos")
                 good = good + 1
 
-        except:
-            pass
+        except Exception as e:
+            print(e)
         # print (good)
         #print (bad)
         shifted = 0
@@ -63,19 +83,19 @@ def Granularity(sentenceArray):
     #1 bad
     #2 neutral
     if ((good > bad) & (shifted == 0)):
-        os.system("printf \"0\">> gransent.txt")
+        osprint(0)
         #print ("a good word")
     elif ((good > bad) & (shifted == 1)):
-        os.system("printf \"1\">> gransent.txt")
+        osprint(1)
         #print ("bad word")
     elif ((good < bad) & (shifted == 0)):
-        os.system("printf \"1\">> gransent.txt")
+        osprint(1)
         # print ("a bad word")
     elif ((good < bad) & (shifted == 1)):
-        os.system("printf \"0\">> gransent.txt")
+        osprint(0)
         # print ("good word")
     else:
-        os.system("printf \"2\">> gransent.txt")
+        osprint(2)
         # print ("neutral word")
 
 
