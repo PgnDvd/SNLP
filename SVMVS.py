@@ -12,7 +12,7 @@ def read_file():
     home = expanduser("~")
     path_to_file = ""
     # file_name = "training.csv"
-    #file_name = "training_uniform.csv"
+    # file_name = "training_uniform.csv"
     file_name = "training_limited.csv"
     with open(path_to_file + file_name, 'rb') as f:
         for row in csv.reader(f, delimiter='#', quoting=csv.QUOTE_ALL):
@@ -52,49 +52,59 @@ def features_from_sentences(sentences, polar):
 
 def train_model(sentences, polar):
     train_set = features_from_sentences(sentences, polar)
+    # classifier = nltk.SklearnClassifier(LinearSVC()).train(train_set[traincv[0]:traincv[len(traincv) - 1]])
+    # classifier.train(train_set)
+    # return classifier
 
-    cv = cross_validation.KFold(len(train_set), n_folds=10)
-    sum_accuracy = 0
-    k = 0
-    for traincv, testcv in cv:
+    for par in ['no', 'not', 'yet', 'never', 'none', 'nobody', 'nowhere', 'nothing', 'neither']:
 
-        # classifier = nltk.SklearnClassifier(naive_bayes.MultinomialNB()).train(train_set[traincv[0]:traincv[len(traincv)-1]])
-        #classifier = nltk.MaxentClassifier.train(train_set[traincv[0]:traincv[len(traincv)-1]], max_iter=10)
-        #classifier = nltk.SklearnClassifier(LogisticRegression()).train(train_set[traincv[0]:traincv[len(traincv)-1]])
-        classifier = nltk.SklearnClassifier(LinearSVC()).train(train_set[traincv[0]:traincv[len(traincv) - 1]])
-        shifters =
-        y_true = []
-        y_pred = []
-        for i in range(len(testcv)):
-            y_true.append(train_set[testcv[i]][1])
-            label = classifier.classify(train_set[testcv[i]][0])
-            # if any(word in 'some one long two phrase three' for word in list_):
-            if any(parole in str(train_set[testcv[i]][0]) for parole in shifters):
-                # if("saumya" in str(train_set[testcv[i]][0])):
-                if (label == 0):
-                    y_pred.append(1)
-                elif (label == 1):
-                    y_pred.append(1)
-            else:
-                y_pred.append(label)
+        train_set = features_from_sentences(sentences, polar)
 
-        acc = metrics.accuracy_score(y_true, y_pred)
-        sum_accuracy += acc
+        cv = cross_validation.KFold(len(train_set), n_folds=10)
+        sum_accuracy = 0
+        k = 0
 
-        k += 1
-        print(str(k) + ')accuracy: ' + str(acc))
-        print('true labels: ' + str(y_true))
-        print('predicted labels: ' + str(y_pred))
-        print('')
+        for traincv, testcv in cv:
 
-    print('ACCURACY: ' + str(sum_accuracy / k))
+            # classifier = nltk.SklearnClassifier(naive_bayes.MultinomialNB()).train(train_set[traincv[0]:traincv[len(traincv)-1]])
+            #classifier = nltk.MaxentClassifier.train(train_set[traincv[0]:traincv[len(traincv)-1]], max_iter=10)
+            #classifier = nltk.SklearnClassifier(LogisticRegression()).train(train_set[traincv[0]:traincv[len(traincv)-1]])
+            #lassifier = nltk.SklearnClassifier(DecisionTreeClassifier()).train(train_set[traincv[0]:traincv[len(traincv) - 1]])
+            classifier = nltk.SklearnClassifier(LinearSVC()).train(train_set[traincv[0]:traincv[len(traincv) - 1]])
+            #'no','not','yet','never','none','nobody','nowhere','nothing','neither'
+            shifters = []
+            #shifters.append(par)
+            #shifters = []
+            y_true = []
+            y_pred = []
+            for i in range(len(testcv)):
+                y_true.append(train_set[testcv[i]][1])
+                label = classifier.classify(train_set[testcv[i]][0])
+                # if any(word in 'some one long two phrase three' for word in list_):
+                if any(parole in str(train_set[testcv[i]][0]) for parole in shifters):
+                    # if("saumya" in str(train_set[testcv[i]][0])):
+                    if (label == 0):
+                        y_pred.append(1)
+                    elif (label == 1):
+                        y_pred.append(1)
+                    else:
+                        y_pred.append(2)
+                else:
+                    y_pred.append(label)
 
+            acc = metrics.accuracy_score(y_true, y_pred)
+            sum_accuracy += acc
 
+            k += 1
+            # print(str(k) + ')accuracy: ' + str(acc))
+            # print('true labels: ' + str(y_true))
+            # print('predicted labels: ' + str(y_pred))
+            # print('')
 
+        print('ACCURACY shifting ' + par + ' : ' + str(sum_accuracy / k))
 
-
-    # classifier.train(train_set)#aggiungere max_iter per maxent
-    #return classifier
+    classifier.train(train_set)  # aggiungere max_iter per maxent
+    return classifier
 
 
 sentences = []

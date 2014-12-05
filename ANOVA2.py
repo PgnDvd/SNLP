@@ -8,6 +8,7 @@ from sklearn import naive_bayes
 from sklearn.svm import LinearSVC
 from sklearn.linear_model import LogisticRegression
 from scipy import stats
+from sklearn.tree import DecisionTreeClassifier
 
 
 def read_file():
@@ -75,6 +76,8 @@ def train_model(sentences, polar):
         classifier3 = nltk.SklearnClassifier(LogisticRegression()).train(
             train_set[traincv[0]:traincv[len(traincv) - 1]])
         classifier4 = nltk.SklearnClassifier(LinearSVC()).train(train_set[traincv[0]:traincv[len(traincv) - 1]])
+        classifier5 = nltk.SklearnClassifier(DecisionTreeClassifier()).train(
+            train_set[traincv[0]:traincv[len(traincv) - 1]])
 
         y_true1 = []
         y_pred1 = []
@@ -84,6 +87,8 @@ def train_model(sentences, polar):
         y_pred3 = []
         y_true4 = []
         y_pred4 = []
+        y_true5 = []
+        y_pred5 = []
         for i in range(len(testcv)):
             y_true1.append(train_set[testcv[i]][1])
             y_pred1.append(classifier1.classify(train_set[testcv[i]][0]))
@@ -101,8 +106,11 @@ def train_model(sentences, polar):
         for i in range(len(testcv)):
             y_true4.append(train_set[testcv[i]][1])
             y_pred4.append(classifier4.classify(train_set[testcv[i]][0]))
+        for i in range(len(testcv)):
+            y_true5.append(train_set[testcv[i]][1])
+            y_pred5.append(classifier5.classify(train_set[testcv[i]][0]))
 
-        f_val, p_val = stats.f_oneway(y_pred1, y_pred2, y_pred3, y_pred4)
+        f_val, p_val = stats.f_oneway(y_pred1, y_pred2, y_pred3, y_pred4, y_pred5)
 
         print("One-way ANOVA P =", p_val)
 
@@ -113,7 +121,12 @@ def train_model(sentences, polar):
         f_val, p_val24 = stats.f_oneway(y_pred4, y_pred2)
         f_val, p_val34 = stats.f_oneway(y_pred3, y_pred4)
 
-        print(p_val12, p_val13, p_val14, p_val23, p_val24, p_val34)
+        f_val, p_val15 = stats.f_oneway(y_pred5, y_pred1)
+        f_val, p_val25 = stats.f_oneway(y_pred5, y_pred2)
+        f_val, p_val35 = stats.f_oneway(y_pred5, y_pred3)
+        f_val, p_val54 = stats.f_oneway(y_pred5, y_pred4)
+
+        print(p_val12, p_val13, p_val14, p_val23, p_val24, p_val34, p_val15, p_val25, p_val35, p_val54)
         sum_anova += p_val
 
         k += 1
@@ -149,5 +162,5 @@ train_anova = anova.fit_transform(train_fitted, train_target) #
 sentences = []
 polar = []
 read_file()
-train_model(sentences, polar)
+# train_model(sentences, polar)
 

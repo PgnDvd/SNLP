@@ -31,6 +31,7 @@ ind_tweets = []
 
 with open("internetnewline.txt") as f:
     content = f.readlines()
+    list = []
     for word in content:
         success = "success\":1"
         if (success in word):
@@ -44,6 +45,7 @@ with open("internetnewline.txt") as f:
             j = word.index(",\"positive")
             polarity = word[i + 9:j - 1]
             print(polarity)
+            # list.append(polarity.replace("positive",'0').replace("negative",'1').replace("indifferent",'2'))
 
             # os.system("printf \"" + parola + "\n\" >> intwords.txt")
             try:
